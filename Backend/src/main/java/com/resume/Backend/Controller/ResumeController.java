@@ -1,4 +1,4 @@
 package com.resume.Backend.Controller;
 
-public class Resume {
+public class ResumeController {
 }

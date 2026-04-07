@@ -1,13 +1,19 @@
 package com.resume.Backend.Model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.*;
 
 @Data
+@Entity
 @Setter
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class JobDescription {
+public class JobDescriptionModel {
+
+    @Id
+    private Long id;
 
     private String title;
     private String description;

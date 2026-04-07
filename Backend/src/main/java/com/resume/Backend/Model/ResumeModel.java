@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Resume {
+public class ResumeModel {
 
     @Id
     private Long id;
