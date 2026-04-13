@@ -18,9 +18,8 @@ public class ResumeController {
         this.service = service;
     }
 
-
     @PostMapping("/upload")
-    public ResponseEntity<String> upoloadResume(@RequestBody MultipartFile resFile) {
+    public ResponseEntity<String> uploadResume(@RequestBody MultipartFile resFile) {
         return ResponseEntity.status(200).body(service.uploadResume(resFile));
     }
 
