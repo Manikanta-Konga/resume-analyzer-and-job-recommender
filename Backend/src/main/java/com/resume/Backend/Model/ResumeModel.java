@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class ResumeModel {
 
     @Id
-    private Long id;
+    private Long resumeId;
 
     private String fileType;
     private String content;

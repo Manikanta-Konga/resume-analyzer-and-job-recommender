@@ -20,6 +20,7 @@ public class ResumeService {
         if(fileSize <= 5) {
             throw new RuntimeException("File size too large");
         }
+//        assert fileName != null : ;
         if((fileName.endsWith(".pdf") || fileName.endsWith(".docx"))) {
             if(resFile.isEmpty()) {
                 throw new RuntimeException("File is Empty, again upload resume");
