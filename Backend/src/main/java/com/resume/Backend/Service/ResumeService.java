@@ -14,12 +14,16 @@ public class ResumeService {
     }
 
     public String uploadResume(MultipartFile resFile) {
+        System.out.println("uploadresume() method in service class is invoked");
         String fileName = resFile.getOriginalFilename();
+        System.out.println("Original File Name: "+fileName);
         long size = resFile.getSize();
+        System.out.println(size);
         double fileSize = (double) size / (1024 * 1024);
-        if(fileSize <= 5) {
+        if(fileSize >= 5) {
             throw new RuntimeException("File size too large");
         }
+        System.out.println(fileName+" : "+fileSize);
 //        assert fileName != null : ;
         if((fileName.endsWith(".pdf") || fileName.endsWith(".docx"))) {
             if(resFile.isEmpty()) {
