@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @RestController
 @RequestMapping("/api")
 public class ResumeController {
@@ -22,7 +24,7 @@ public class ResumeController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadResume(@RequestParam("File") MultipartFile resFile) {
+    public ResponseEntity<String> uploadResume(@RequestParam("File") MultipartFile resFile) throws IOException {
         return ResponseEntity.status(200).body(service.uploadResume(resFile));
     }
 
