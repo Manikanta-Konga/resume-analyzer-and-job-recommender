@@ -70,11 +70,43 @@ public class ResumeService {
         newFileName = name + "_" + timeStamp + "_" + uuId + extension;
 
 
+        // Saving the file
+
+        //To save the file, I'm using the absolute path.
+        //Because when I used relative path spring is storing the file in tomcat temporary folder.
+        String fileDir = System.getProperty("user.dir") + File.separator + "uploads/resumes";
+
+        File folder = new File(fileDir);
+
+        // It checks whether folder exists or not.
+        // If it not exists it creates the folder in the root directory
+        if(!folder.exists()) {
+            folder.mkdirs();
+        }
+
+//         It doesn't create the file, it only represents the file path in the system.
+        File destination = new File(folder, newFileName);
+
+//        File parent = destination.getParentFile();
+//        System.out.println();
+//        System.out.println("Before mkdirs: "+parent.exists());
+//        System.out.println("using mkdirs: "+parent.mkdirs());
+//        System.out.println("after mkdirs: "+parent.exists());
+//        System.out.println();
+//        System.out.println("is file is empty: "+resFile.isEmpty()+ ",  Size: "+resFile.getSize());
+//
+//        System.out.println();
+//        System.out.println("Current Working Directory: "+System.getProperty("user.dir"));
+//        System.out.println();
+//        System.out.println("File storing at : "+destination.getAbsolutePath());
+//        System.out.println(destination.exists());
+//        System.out.println();
+
+        resFile.transferTo(destination);
 
 
 
-
-        return "Resume File is Uploaded Successfully";
+        return "Resume File is Saved Successfully";
     }
 
 
