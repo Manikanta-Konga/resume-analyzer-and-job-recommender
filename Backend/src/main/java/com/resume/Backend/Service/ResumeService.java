@@ -1,6 +1,8 @@
 package com.resume.Backend.Service;
 
+import com.resume.Backend.Parser.ResumeParsing;
 import com.resume.Backend.Repository.ResumeRepo;
+import org.apache.tika.exception.TikaException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,11 +17,16 @@ public class ResumeService {
 
     private final ResumeRepo repo;
 
-    ResumeService(ResumeRepo repo) {
+    private final ResumeParsing parser;
+
+
+
+    ResumeService(ResumeRepo repo, ResumeParsing parser) {
         this.repo = repo;
+        this.parser = parser;
     }
 
-    public String uploadResume(MultipartFile resFile) throws IOException {
+    public String uploadResume(MultipartFile resFile) throws IOException{
 
         String fileName = resFile.getOriginalFilename();
 
@@ -52,7 +59,7 @@ public class ResumeService {
         int idxOfDot = fileName.lastIndexOf(".");
 
         if(idxOfDot == -1) {
-            throw new RuntimeException("No File extension, provide proper file.");
+            throw new RuntimeException("No File extension, upload proper file.");
         }
 
         // Gives the name without taking extensions
@@ -73,7 +80,7 @@ public class ResumeService {
         // Saving the file
 
         //To save the file, I'm using the absolute path.
-        //Because when I used relative path spring is storing the file in tomcat temporary folder.
+        //Because when I used relative path, spring is storing the file in tomcat temporary folder.
         String fileDir = System.getProperty("user.dir") + File.separator + "uploads/resumes";
 
         File folder = new File(fileDir);
@@ -104,9 +111,9 @@ public class ResumeService {
 
         resFile.transferTo(destination);
 
+        String information = parser.extractStringFromFile(destination);
 
-
-        return "Resume File is Saved Successfully";
+        return information;
     }
 
 

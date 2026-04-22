@@ -32,6 +32,7 @@
         <maven.compiler.target>21</maven.compiler.target>
     </properties>
 	<dependencies>
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -94,12 +95,11 @@
 			<scope>compile</scope>
 		</dependency>
 		<!-- Source: https://mvnrepository.com/artifact/org.apache.tika/tika-parsers -->
+
 		<dependency>
 			<groupId>org.apache.tika</groupId>
-			<artifactId>tika-parsers</artifactId>
+			<artifactId>tika-parsers-standard-package</artifactId>
 			<version>3.2.3</version>
-			<type>pom</type>
-			<scope>compile</scope>
 		</dependency>
 
 
