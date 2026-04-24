@@ -30,8 +30,24 @@ public class ResumeParsing {
             obj.getStackTrace();
         }
 
-        return fileInfo;
+        return formatString(fileInfo);
     }
+
+    public String formatString(String fileInfo) {
+
+        return fileInfo.replaceAll("\s+", " ")
+                .replaceAll("\n+", "\n").
+                trim().
+                toLowerCase();
+
+    }
+
+//    public String findEmail(String text) {
+//
+////        String mail = text.find("\w+@\w+.com");
+//
+//        return mail;
+//    }
 
 }
 

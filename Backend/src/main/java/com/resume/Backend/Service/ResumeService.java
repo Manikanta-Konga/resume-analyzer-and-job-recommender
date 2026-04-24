@@ -111,11 +111,10 @@ public class ResumeService {
 
         resFile.transferTo(destination);
 
-        String information = parser.extractStringFromFile(destination);
+        String parsedText = parser.extractStringFromFile(destination);
 
-        return information;
+        return parsedText;
     }
-
 
 
 }
