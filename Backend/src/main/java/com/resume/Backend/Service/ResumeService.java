@@ -2,7 +2,6 @@ package com.resume.Backend.Service;
 
 import com.resume.Backend.Parser.ResumeParsing;
 import com.resume.Backend.Repository.ResumeRepo;
-import org.apache.tika.exception.TikaException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 

@@ -1,22 +1,33 @@
 package com.resume.Backend.Parser;
 
+import com.resume.Backend.Analyzer.InfoExtraction;
 import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Set;
 
 @Component
 public class ResumeParsing {
 
+    InfoExtraction extraction;
+
+
+    ResumeParsing(InfoExtraction extraction) {
+        this.extraction = extraction;
+    }
+
+
     public String extractStringFromFile(File resumeFile) throws IOException {
 
-        String fileInfo = "";
+        // Entire file content will be stored as String
+        String fileContent = "";
 
         Tika tika = TikaSingleton.getInstance();
 
+        // Returns the type of file
         String type = tika.detect(resumeFile);
 
 
@@ -25,12 +36,21 @@ public class ResumeParsing {
         }
 
         try {
-            fileInfo = tika.parseToString(resumeFile);
+            fileContent = tika.parseToString(resumeFile);
         } catch (TikaException obj) {
             obj.getStackTrace();
         }
 
-        return formatString(fileInfo);
+        String formattedFileContent = formatString(fileContent);
+
+        Set<String> extractedSkills = extraction.extractSkills(formattedFileContent);
+
+//        System.out.println(extractedSkills);
+
+
+        //Returning the formatted file as String without extra spaces, lines.
+        // Converts entire String into lowercase
+        return formattedFileContent;
     }
 
     public String formatString(String fileInfo) {
@@ -41,13 +61,6 @@ public class ResumeParsing {
                 toLowerCase();
 
     }
-
-//    public String findEmail(String text) {
-//
-////        String mail = text.find("\w+@\w+.com");
-//
-//        return mail;
-//    }
 
 }
 
