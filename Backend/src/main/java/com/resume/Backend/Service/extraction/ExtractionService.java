@@ -1,4 +1,4 @@
-package com.resume.Backend.Analyzer;
+package com.resume.Backend.Service.extraction;
 
 import org.springframework.stereotype.Component;
 
@@ -7,23 +7,36 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component
-public class InfoExtraction {
+public class ExtractionService {
 
-//    public String formattingFileContent(String text) {
-//
-//    }
+    public String findPhoneNo(String text) {
 
-    public ArrayList<String> findEmail(String text) {
+        String regEx = "(\\+91[\\s-]?|0)?[6-9]\\d{9}";
+
+        Pattern pattern = Pattern.compile(regEx);
+
+        Matcher matcher = pattern.matcher(text);
+
+        String phoneNo = "";
+
+        while(matcher.find()) {
+            phoneNo = matcher.group();
+        }
+
+        return phoneNo;
+    }
+
+    public String findEmail(String text) {
         String regEx = "[\\w-]+@\\w+\\.com";
-        ArrayList<String> emails = new ArrayList<>();
+        String email = "";;
         Pattern pattern = Pattern.compile(regEx);
         Matcher matcher = pattern.matcher(text);
 
         while(matcher.find()) {
-            emails.add(matcher.group());
+            email = matcher.group();
         }
 
-        return emails;
+        return email;
     }
 
     public Set<String> extractSkills(String text) {
@@ -89,24 +102,6 @@ public class InfoExtraction {
         System.out.println(extractedSkills);
 
         return extractedSkills;
-    }
-
-    public ArrayList<String> findPhoneNo(String text) {
-
-        String regEx = "(\\+91[\\s-]?|0)?[6-9]\\d{9}";
-
-        Pattern pattern = Pattern.compile(regEx);
-
-        Matcher matcher = pattern.matcher(text);
-
-        ArrayList<String> list = new ArrayList<>();
-
-
-        while(matcher.find()) {
-            list.add(matcher.group());
-        }
-
-        return list;
     }
 
 }

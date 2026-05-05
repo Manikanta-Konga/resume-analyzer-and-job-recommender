@@ -1,6 +1,6 @@
-package com.resume.Backend.Parser;
+package com.resume.Backend.Service.parsing;
 
-import com.resume.Backend.Analyzer.InfoExtraction;
+import com.resume.Backend.Service.extraction.ExtractionService;
 import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 import org.springframework.stereotype.Component;
@@ -10,14 +10,15 @@ import java.io.IOException;
 import java.util.Set;
 
 @Component
-public class ResumeParsing {
+public class ParsingService {
 
-    InfoExtraction extraction;
+    ExtractionService extraction;
 
 
-    ResumeParsing(InfoExtraction extraction) {
+    ParsingService(ExtractionService extraction) {
         this.extraction = extraction;
     }
+
 
 
     public String extractStringFromFile(File resumeFile) throws IOException {

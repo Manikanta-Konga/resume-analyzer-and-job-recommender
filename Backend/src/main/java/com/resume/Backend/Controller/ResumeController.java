@@ -1,6 +1,6 @@
 package com.resume.Backend.Controller;
 
-import com.resume.Backend.Service.ResumeService;
+import com.resume.Backend.Service.resume.ResumeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
