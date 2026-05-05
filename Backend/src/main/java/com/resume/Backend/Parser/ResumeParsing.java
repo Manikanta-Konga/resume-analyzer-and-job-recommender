@@ -41,7 +41,7 @@ public class ResumeParsing {
             obj.getStackTrace();
         }
 
-        String formattedFileContent = formatString(fileContent);
+        String formattedFileContent = formatFileContent(fileContent);
 
         Set<String> extractedSkills = extraction.extractSkills(formattedFileContent);
 
@@ -53,10 +53,10 @@ public class ResumeParsing {
         return formattedFileContent;
     }
 
-    public String formatString(String fileInfo) {
+    public String formatFileContent(String fileInfo) {
 
         return fileInfo.replaceAll("\s+", " ")
-                .replaceAll("\n+", "\n").
+                .replaceAll("\n+", " ").
                 trim().
                 toLowerCase();
 
