@@ -1,4 +1,4 @@
-package com.resume.Backend.Model;
+package com.resume.Backend.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

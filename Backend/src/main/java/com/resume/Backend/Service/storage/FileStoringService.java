@@ -1,4 +1,4 @@
-package com.resume.Backend.Service.storage;
+package com.resume.Backend.service.storage;
 
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;

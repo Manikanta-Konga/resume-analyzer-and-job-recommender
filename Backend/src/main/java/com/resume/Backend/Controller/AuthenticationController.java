@@ -1,4 +1,4 @@
-package com.resume.Backend.Controller;
+package com.resume.Backend.controller;
 
 
 import org.springframework.web.bind.annotation.RestController;

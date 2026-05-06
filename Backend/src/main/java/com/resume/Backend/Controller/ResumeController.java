@@ -1,6 +1,7 @@
-package com.resume.Backend.Controller;
+package com.resume.Backend.controller;
 
-import com.resume.Backend.Service.resume.ResumeService;
+import com.resume.Backend.model.ResumeEntityModel;
+import com.resume.Backend.service.resume.ResumeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,7 +25,7 @@ public class ResumeController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadResume(@RequestParam("File") MultipartFile resFile) throws IOException {
+    public ResponseEntity<ResumeEntityModel> uploadResume(@RequestParam("File") MultipartFile resFile) throws IOException {
         return ResponseEntity.status(200).body(service.uploadResume(resFile));
     }
 

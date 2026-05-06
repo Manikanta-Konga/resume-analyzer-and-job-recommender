@@ -1,5 +1,6 @@
-package com.resume.Backend.Service.extraction;
+package com.resume.Backend.service.extraction;
 
+import com.resume.Backend.DTO.ResumeDataDTO;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -9,7 +10,7 @@ import java.util.regex.Pattern;
 @Component
 public class ExtractionService {
 
-    public String findPhoneNo(String text) {
+    public String extractPhoneNo(String text) {
 
         String regEx = "(\\+91[\\s-]?|0)?[6-9]\\d{9}";
 
@@ -26,7 +27,7 @@ public class ExtractionService {
         return phoneNo;
     }
 
-    public String findEmail(String text) {
+    public String extractEmail(String text) {
         String regEx = "[\\w-]+@\\w+\\.com";
         String email = "";;
         Pattern pattern = Pattern.compile(regEx);
@@ -102,6 +103,24 @@ public class ExtractionService {
         System.out.println(extractedSkills);
 
         return extractedSkills;
+    }
+
+    public ResumeDataDTO createDTO(String text) {
+        String email = extractEmail(text);
+        String phoneNo = extractPhoneNo(text);
+        Set<String> skills = extractSkills(text);
+
+        return mapToDTO(phoneNo, email, skills);
+    }
+
+    public ResumeDataDTO mapToDTO(String phoneNo, String email, Set<String> skills) {
+        ResumeDataDTO resumeData = new ResumeDataDTO();
+
+        resumeData.setEmail(email);
+        resumeData.setPhoneNo(phoneNo);
+        resumeData.setSkills(skills);
+
+        return resumeData;
     }
 
 }

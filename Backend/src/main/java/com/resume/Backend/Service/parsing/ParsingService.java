@@ -1,6 +1,6 @@
-package com.resume.Backend.Service.parsing;
+package com.resume.Backend.service.parsing;
 
-import com.resume.Backend.Service.extraction.ExtractionService;
+import com.resume.Backend.service.extraction.ExtractionService;
 import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 import org.springframework.stereotype.Component;
