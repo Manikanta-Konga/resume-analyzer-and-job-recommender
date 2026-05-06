@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | AI Resume</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #4F46E5;
+            --bg: #F3F4F6;
+            --card-bg: #FFFFFF;
+            --text-main: #1F2937;
+            --text-muted: #6B7280;
+            --border: #E5E7EB;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); padding: 40px 20px; }
+
+        .container { max-width: 1000px; margin: 0 auto; }
+
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .header h1 { font-size: 2rem; font-weight: 800; color: var(--primary); }
+        .back-link { color: var(--primary); text-decoration: none; font-weight: 600; background: #EEF2FF; padding: 8px 16px; border-radius: 8px; transition: background 0.2s; }
+        .back-link:hover { background: #E0E7FF; }
+
+        .card { background: var(--card-bg); border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); border: 1px solid var(--border); overflow: hidden; }
+
+        table { width: 100%; border-collapse: collapse; text-align: left; }
+        th { background-color: #F9FAFB; padding: 16px 20px; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); border-bottom: 1px solid var(--border); }
+        td { padding: 16px 20px; border-bottom: 1px solid var(--border); font-size: 0.95rem; }
+        tr:last-child td { border-bottom: none; }
+        tr:hover { background-color: #F9FAFB; }
+
+        .score-badge { background: #EEF2FF; color: var(--primary); padding: 4px 10px; border-radius: 20px; font-weight: 800; font-size: 0.9rem; }
+        .skill-list { color: var(--text-muted); font-size: 0.85rem; line-height: 1.4; }
+
+        .loader { text-align: center; padding: 40px; color: var(--text-muted); font-weight: 600; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Scanned Profiles</h1>
+        <a href="/" class="back-link">← Back to Scanner</a>
+    </div>
+
+    <div class="card">
+        <table>
+            <thead>
+            <tr>
+                <th>Candidate File</th>
+                <th>ATS Score</th>
+                <th>Top Skills Detected</th>
+                <th>Scan Date</th>
+            </tr>
+            </thead>
+            <tbody id="tableBody">
+            <tr><td colspan="4" class="loader">Loading database records...</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    // This runs immediately when the page loads
+    window.onload = async function() {
+        try {
+            // Call our new Java endpoint
+            const response = await fetch('/api/resume/profiles');
+            const profiles = await response.json();
+
+            const tableBody = document.getElementById('tableBody');
+
+            if (profiles.length === 0) {
+                tableBody.innerHTML = '<tr><td colspan="4" style="text-align: center; padding: 30px; color: #6B7280;">No resumes scanned yet.</td></tr>';
+                return;
+            }
+
+            let rowsHtml = '';
+
+            // Loop through the database rows and create HTML for each one
+            profiles.forEach(profile => {
+                // Format the date to look nice (e.g., "Oct 24, 2025")
+                const dateObj = new Date(profile.uploadDate);
+                const formattedDate = dateObj.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+
+                rowsHtml += `
+                    <tr>
+                        <td style="font-weight: 600; color: #111827;">📄 ${profile.fileName}</td>
+                        <td><span class="score-badge">${profile.atsScore}</span></td>
+                        <td class="skill-list">${profile.extractedSkills.replace(/,/g, ", ")}</td>
+                        <td style="color: #6B7280; font-size: 0.85rem;">${formattedDate}</td>
+                    </tr>
+                `;
+            });
+
+            tableBody.innerHTML = rowsHtml;
+
+        } catch (error) {
+            console.error("Failed to load profiles:", error);
+            document.getElementById('tableBody').innerHTML = '<tr><td colspan="4" style="text-align: center; color: red;">Failed to load database. Is the backend running?</td></tr>';
+        }
+    };
+</script>
+
+</body>
+</html>
