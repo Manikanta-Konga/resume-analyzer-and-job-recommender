@@ -1,5 +1,7 @@
-package com.resume.Backend.service.storage;
+package com.resume.Backend.service.storingInDB;
 
+import com.resume.Backend.ExceptionHandling.customexception.InvalidFileException;
+import com.resume.Backend.ExceptionHandling.customexception.ResumeProcessingException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -24,7 +26,7 @@ public class FileStoringService {
         int idxOfDot = fileName.lastIndexOf(".");
 
         if(idxOfDot == -1) {
-            throw new RuntimeException("No File extension, upload proper file.");
+            throw new InvalidFileException("No File extension, upload proper file.");
         }
 
         // Gives the name without taking extensions
@@ -37,15 +39,18 @@ public class FileStoringService {
 
         // Checks whether the entered resume is supported format or not
         if(!(extension.equals(".pdf") || extension.equals(".doc") || extension.equals(".docx"))) {
-            throw new RuntimeException("Format not supporting, upload pdf, doc or docx file");
+            throw new InvalidFileException("Format not supporting, upload pdf, doc or docx file");
         }
+
+
+
         newFileName = name + "_" + timeStamp + "_" + uuId + extension;
 
         return newFileName;
     }
 
     // Returns the destination path of the file
-    public File storeFileInServerFile(String fileName, MultipartFile originalFile) throws IOException {
+    public File storeFileInServerFile(String fileName, MultipartFile originalFile) {
         //To save the file, I'm using the absolute path.
         //Because when I used relative path, spring is storing the file in tomcat temporary folder.
         String fileDir = System.getProperty("user.dir") + File.separator + "uploads/resumes";
@@ -61,7 +66,12 @@ public class FileStoringService {
 //         It doesn't create the file, it only represents the file path in the system.
         File destination = new File(folder, fileName);
 
-        originalFile.transferTo(destination);
+        try {
+            originalFile.transferTo(destination);
+        } catch(IOException ex) {
+            throw new ResumeProcessingException("Failed to store the file in it's destination",
+                    ex);
+        }
 
         return destination;
     }

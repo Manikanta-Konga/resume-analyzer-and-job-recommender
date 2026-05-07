@@ -1,5 +1,7 @@
 package com.resume.Backend.service.parsing;
 
+import com.resume.Backend.ExceptionHandling.customexception.InvalidFileException;
+import com.resume.Backend.ExceptionHandling.customexception.ResumeProcessingException;
 import com.resume.Backend.service.extraction.ExtractionService;
 import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
@@ -19,35 +21,44 @@ public class ParsingService {
         this.extraction = extraction;
     }
 
+    public Tika givesTika() {
+        return TikaSingleton.getInstance();
+    }
 
 
-    public String extractStringFromFile(File resumeFile) throws IOException {
+    public String extractStringFromFile(File resumeFile){
 
         // Entire file content will be stored as String
         String fileContent = "";
+        String type = "";
 
-        Tika tika = TikaSingleton.getInstance();
+        Tika tika = givesTika();
 
-        // Returns the type of file
-        String type = tika.detect(resumeFile);
-
+        try {
+            // Returns the type of file
+            type = tika.detect(resumeFile);
+        } catch(IOException ex) {
+            throw new ResumeProcessingException("Failed to detect the type of file",
+                    ex);
+        }
 
         if (!(type.equals("application/pdf") || type.equals("application/msword"))) {
-            throw new RuntimeException("Content in the file is not supported");
+            throw new InvalidFileException("Content in the file is not supported. " +
+                    "Only pdf or doc type files are allowed");
         }
 
         try {
             fileContent = tika.parseToString(resumeFile);
-        } catch (TikaException obj) {
-            obj.getStackTrace();
+        } catch (IOException obj1) {
+            throw new ResumeProcessingException("Failed to parse the Resume file",
+                    obj1);
+        } catch(TikaException obj2) {
+            throw new ResumeProcessingException("Failed to parse the resume file, tika exception occured",
+                    obj2);
         }
 
         String formattedFileContent = formatFileContent(fileContent);
-
         Set<String> extractedSkills = extraction.extractSkills(formattedFileContent);
-
-//        System.out.println(extractedSkills);
-
 
         //Returning the formatted file as String without extra spaces, lines.
         // Converts entire String into lowercase

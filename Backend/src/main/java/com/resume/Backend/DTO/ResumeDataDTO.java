@@ -7,7 +7,6 @@ import java.util.Set;
 
 
 @Data
-@NoArgsConstructor
 public class ResumeDataDTO {
 
     private String email;
