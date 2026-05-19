@@ -1,4 +1,4 @@
-package com.resume.Backend.ExceptionHandling.customexception;
+package com.resume.Backend.exceptionhandling.customexception;
 
 public class ResumeProcessingException extends RuntimeException {
 

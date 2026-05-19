@@ -1,9 +1,10 @@
-package com.resume.Backend.ExceptionHandling;
+package com.resume.Backend.exceptionhandling;
 
-import com.resume.Backend.ExceptionHandling.customexception.InvalidFileException;
-import com.resume.Backend.ExceptionHandling.customexception.ResumeProcessingException;
+import com.resume.Backend.exceptionhandling.customexception.InvalidFileException;
+import com.resume.Backend.exceptionhandling.customexception.ResumeProcessingException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -49,6 +50,41 @@ public class GlobalExceptionHandling {
 
         ErrorResponse errorResponse = new ErrorResponse(
                 ex.getMessage(),
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(
+                errorResponse,
+                HttpStatus.INTERNAL_SERVER_ERROR
+        );
+    }
+
+    public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(
+            HttpMessageNotReadableException ex) {
+
+//        log.warn("Malformed request body received", ex);
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                "Invalid request format",
+                HttpStatus.BAD_REQUEST.value(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(
+                errorResponse,
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorResponse> handleGlobalException(
+            Exception ex) {
+
+//        log.error("Unexpected exception occurred", ex);
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                "Something went wrong. Please try again later.",
                 HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 LocalDateTime.now()
         );

@@ -1,4 +1,4 @@
-package com.resume.Backend.ExceptionHandling;
+package com.resume.Backend.exceptionhandling;
 
 import java.time.LocalDateTime;
 

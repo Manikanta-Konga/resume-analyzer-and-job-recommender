@@ -1,6 +1,5 @@
-package com.resume.Backend.DTO;
+package com.resume.Backend.dto;
 
-import jakarta.persistence.Entity;
 import lombok.*;
 
 import java.util.Set;
