@@ -1,6 +1,6 @@
 package com.resume.Backend.parsing;
 
-import com.resume.Backend.dto.ResumeDataDTO;
+import com.resume.Backend.dto.ResumeDataDto;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -14,15 +14,13 @@ public class ExtractionService {
     public String extractPhoneNo(String text) {
 
         String regEx = "(\\+91[\\s-]?|0)?[6-9]\\d{9}";
-
         Pattern pattern = Pattern.compile(regEx);
-
         Matcher matcher = pattern.matcher(text);
-
         String phoneNo = "";
 
         while(matcher.find()) {
             phoneNo = matcher.group();
+            break;
         }
 
         return phoneNo;
@@ -30,12 +28,13 @@ public class ExtractionService {
 
     public String extractEmail(String text) {
         String regEx = "[\\w-]+@\\w+\\.com";
-        String email = "";;
+        String email = "";
         Pattern pattern = Pattern.compile(regEx);
         Matcher matcher = pattern.matcher(text);
 
         while(matcher.find()) {
             email = matcher.group();
+            break;
         }
 
         return email;
@@ -70,10 +69,12 @@ public class ExtractionService {
 
         Matcher matcher = pattern.matcher(text);
 
+        // Converting entire text into set of words
         while(matcher.find()) {
             wordSet.add(matcher.group());
         }
 
+        // Matching multiskills in extracted wordset
         for(String skill : multiSkillSet) {
             // Pattern.quote(str) makes str as normal string and ignore regex rules(ex. c++, node.js)
             // \b is used for word breaking
@@ -85,24 +86,21 @@ public class ExtractionService {
 
         for(String skill : singleSkillSet) {
             if(wordSet.contains(skill)) {
-                boolean isPresentIsBiggerPhrase = false;
+                boolean isPresentInBiggerPhrase = false;
                 // We are checking whether the skill is part of extracted skill or not
                 for(String word : extractedSkills) {
                     if(word.contains(" "+skill+" ") || word.startsWith(skill+" ")
                             || word.endsWith(" "+skill)) {
-                        isPresentIsBiggerPhrase = true;
+                        isPresentInBiggerPhrase = true;
                         break;
                     }
                 }
                 // If it is not a part of multi skill, then we are adding it to skill set.
-                if(!isPresentIsBiggerPhrase) {
+                if(!isPresentInBiggerPhrase) {
                     extractedSkills.add(skill);
                 }
             }
         }
-
-        System.out.println("extractSkills() called");
-        System.out.println(extractedSkills);
 
         return normalizeSetSkills(extractedSkills);
     }
@@ -117,7 +115,7 @@ public class ExtractionService {
                 .collect(Collectors.toSet());
     }
 
-    public ResumeDataDTO createDTO(String text) {
+    public ResumeDataDto createDTO(String text) {
         String email = extractEmail(text);
         String phoneNo = extractPhoneNo(text);
         Set<String> skills = extractSkills(text);
@@ -125,8 +123,8 @@ public class ExtractionService {
         return mapToDTO(phoneNo, email, skills);
     }
 
-    public ResumeDataDTO mapToDTO(String phoneNo, String email, Set<String> skills) {
-        ResumeDataDTO resumeData = new ResumeDataDTO();
+    public ResumeDataDto mapToDTO(String phoneNo, String email, Set<String> skills) {
+        ResumeDataDto resumeData = new ResumeDataDto();
 
         resumeData.setEmail(email);
         resumeData.setPhoneNo(phoneNo);

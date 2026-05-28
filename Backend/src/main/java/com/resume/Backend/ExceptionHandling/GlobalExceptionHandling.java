@@ -24,11 +24,11 @@ public class GlobalExceptionHandling {
 
         ErrorResponse errorResponse = new ErrorResponse(
                 errorMessage,
-                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.NOT_FOUND.value(),
                 LocalDateTime.now()
         );
 
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(InvalidFileException.class)
@@ -50,16 +50,17 @@ public class GlobalExceptionHandling {
 
         ErrorResponse errorResponse = new ErrorResponse(
                 ex.getMessage(),
-                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                HttpStatus.UNPROCESSABLE_CONTENT.value(),
                 LocalDateTime.now()
         );
 
         return new ResponseEntity<>(
                 errorResponse,
-                HttpStatus.INTERNAL_SERVER_ERROR
+                HttpStatus.UNPROCESSABLE_CONTENT
         );
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> handleHttpMessageNotReadableException(
             HttpMessageNotReadableException ex) {
 
@@ -75,6 +76,21 @@ public class GlobalExceptionHandling {
                 errorResponse,
                 HttpStatus.BAD_REQUEST
         );
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ErrorResponse> handleRuntimeException(
+            RuntimeException ex) {
+        ErrorResponse response = new ErrorResponse(
+                ex.getMessage(),
+                HttpStatus.CONFLICT.value(),
+                LocalDateTime.now()
+        );
+
+        return new ResponseEntity<>(
+                response,
+                HttpStatus.CONFLICT
+                );
     }
 
     @ExceptionHandler(Exception.class)

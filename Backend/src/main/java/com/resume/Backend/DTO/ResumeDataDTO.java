@@ -6,16 +6,16 @@ import java.util.Set;
 
 
 @Data
-public class ResumeDataDTO {
+public class ResumeDataDto {
 
     private String email;
     private String phoneNo;
     private Set<String> skills;
 
-    public ResumeDataDTO() {}
+    public ResumeDataDto() {}
 
 
-    public ResumeDataDTO(String email, String phoneNo, Set<String> skills) {
+    public ResumeDataDto(String email, String phoneNo, Set<String> skills) {
         this.email = email;
         this.phoneNo = phoneNo;
         this.skills = skills;

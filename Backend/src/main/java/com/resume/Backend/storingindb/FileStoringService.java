@@ -20,7 +20,9 @@ public class FileStoringService {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("ddMMyyyy_HHmmss");
         String timeStamp = time.format(formatter);
 
-        String uuId = UUID.randomUUID().toString().replace("-", "");
+        String uuId = UUID.randomUUID()
+                .toString()
+                .replace("-", "");
 
         // Handle NullPointerException
         int idxOfDot = fileName.lastIndexOf(".");
@@ -41,8 +43,6 @@ public class FileStoringService {
         if(!(extension.equals(".pdf") || extension.equals(".doc") || extension.equals(".docx"))) {
             throw new InvalidFileException("Format not supporting, upload pdf, doc or docx file");
         }
-
-
 
         newFileName = name + "_" + timeStamp + "_" + uuId + extension;
 

@@ -11,20 +11,19 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class JobRecommendationService {
 
 
-//    @Value("${adzuna.app.id}")
-    private String appId = "79eeb71b";
+    @Value("${adzuna.api.id}")
+    private String appId;
 
-//    @Value("${adzuna.app.key}")
-    private String appKey = "3d763a0c66495c6c0d3ab7ebb8fd3787";
+    @Value("${adzuna.api.key}")
+    private String appKey;
 
     public List<JobRecommendationDto> getJobRecommendation(Set<String> skills) {
-        String searchQuery = String.join(" OR ", skills);
+
         String role = predictRole(skills).replace(" ", "_");
         String apiUrl = UriComponentsBuilder
                 .fromUriString("https://api.adzuna.com/v1/api/jobs/in/search/1")
@@ -34,19 +33,11 @@ public class JobRecommendationService {
                 .build()
                 .toUriString();
 
-        System.out.println();
-        System.out.println(apiUrl);
-        System.out.println();
-
         RestTemplate restTemplate = new RestTemplate();
-
         AdzunaResponseDto adzunaResponseDto = restTemplate.getForObject(apiUrl, AdzunaResponseDto.class);
 
         return convertToDto(adzunaResponseDto);
     }
-
-
-
 
     public List<JobRecommendationDto> convertToDto(AdzunaResponseDto jobs) {
         return jobs.getResults()
@@ -95,20 +86,20 @@ public class JobRecommendationService {
                         "bootstrap", 3,
                         "tailwind css", 3,
                         "redux", 3,
-                        "angular", 4
+                        "react js", 4
                 ),
 
-                "Full Stack Developer",
+                "Java Full Stack Developer",
                 Map.of(
                         "java", 5,
                         "spring boot", 5,
-                        "react", 5,
                         "javascript", 4,
                         "html", 3,
                         "css", 3,
                         "mysql", 3,
                         "rest api", 4,
-                        "git hub", 2
+                        "git hub", 2,
+                        "react js", 4
                 ),
 
                 "Python Developer",
@@ -192,7 +183,6 @@ public class JobRecommendationService {
 
         String bestRole = "Software Developer";
         int maxScore = 0;
-
         for (Map.Entry<String, Map<String, Integer>> entry : roleSkills.entrySet()) {
 
             int score = 0;

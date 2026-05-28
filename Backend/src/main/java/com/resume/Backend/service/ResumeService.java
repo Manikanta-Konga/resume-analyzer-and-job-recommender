@@ -1,8 +1,7 @@
 package com.resume.Backend.service;
 
 import com.resume.Backend.dto.JobRecommendationDto;
-import com.resume.Backend.dto.ResponseDTO;
-import com.resume.Backend.dto.ResumeDataDTO;
+import com.resume.Backend.dto.ResumeDataDto;
 import com.resume.Backend.exceptionhandling.customexception.InvalidFileException;
 import com.resume.Backend.entity.ResumeEntity;
 //import com.resume.Backend.parsing.JobMatchingService;
@@ -11,7 +10,6 @@ import com.resume.Backend.parsing.ParsingService;
 //import com.resume.Backend.repository.JobRepository;
 import com.resume.Backend.repository.ResumeRepo;
 import com.resume.Backend.storingindb.FileStoringService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -39,6 +37,27 @@ public class ResumeService {
         this.jobRecommendationService = jobRecommendationService;
     }
 
+    public List<JobRecommendationDto> uploadResume(MultipartFile file) {
+
+        String fileName = file.getOriginalFilename();
+
+        isResumeValid(file);
+
+        String newFileName = fileStoring.createUniqueFileName(fileName);
+        File destination = fileStoring.storeFileInServerFile(newFileName, file);
+        String parsedText = parser.extractStringFromFile(destination);
+        System.out.println("create dto has called");
+        ResumeDataDto resumeData = extractionService.createDTO(parsedText);
+
+        Set<String> skills = extractionService.extractSkills(parsedText);
+
+        List<JobRecommendationDto> recommendedJobs = jobRecommendationService.getJobRecommendation(skills);
+
+        saveInDB(resumeData);
+
+        return recommendedJobs;
+    }
+
     public void isResumeValid(MultipartFile file) {
         String fileName = file.getOriginalFilename();
 
@@ -61,40 +80,14 @@ public class ResumeService {
 
     }
 
-//    public String deleteJob(Long jobId) {
-//        jobRepository.deleteById(jobId);
-//        return "job Success fully Deleted";
-//    }
 
-    public List<JobRecommendationDto> uploadResume(MultipartFile file) {
-
-        String fileName = file.getOriginalFilename();
-
-        isResumeValid(file);
-
-        String newFileName = fileStoring.createUniqueFileName(fileName);
-        File destination = fileStoring.storeFileInServerFile(newFileName, file);
-        String parsedText = parser.extractStringFromFile(destination);
-        System.out.println("create dto has called");
-        ResumeDataDTO resumeData = extractionService.createDTO(parsedText);
-
-        Set<String> skills = extractionService.extractSkills(parsedText);
-
-//        List<JobRecommendationDto> recommendedJobs = jobRecommendationService.getJobRecommendation(skills);
-        List<JobRecommendationDto> recommendedJobs = jobRecommendationService.getJobRecommendation(skills);
-
-        saveInDB(resumeData);
-
-        return recommendedJobs;
-    }
-
-    public ResumeDataDTO saveInDB(ResumeDataDTO resumeData) {
+    public ResumeDataDto saveInDB(ResumeDataDto resumeData) {
         ResumeEntity resumeEntity = convertToResumeEntity(resumeData);
         repo.save(resumeEntity);
         return resumeData;
     }
 
-    public ResumeEntity convertToResumeEntity(ResumeDataDTO resumeData) {
+    public ResumeEntity convertToResumeEntity(ResumeDataDto resumeData) {
         ResumeEntity resumeEntity = new ResumeEntity();
 
         resumeEntity.setEmail(resumeData.getEmail());

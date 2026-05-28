@@ -1,11 +1,13 @@
 package com.resume.Backend.service.authenticationservice;
 
-import com.resume.Backend.dto.AuthResponse;
-import com.resume.Backend.dto.LogInReqDTO;
-import com.resume.Backend.dto.RegisterRequest;
-import com.resume.Backend.entity.Role;
+import com.resume.Backend.dto.AuthResponseDto;
+import com.resume.Backend.dto.LogInReqDto;
+import com.resume.Backend.dto.RegisterReqDto;
+import com.resume.Backend.dto.RegistrationResDto;
 import com.resume.Backend.entity.UserEntity;
 import com.resume.Backend.repository.UserRepo;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +27,20 @@ public class AuthService {
         this.jwtService = jwtService;
     }
 
-    public void register(RegisterRequest request) {
+    public ResponseEntity<RegistrationResDto> register(RegisterReqDto request) {
+
+        String userName = request.getName();
+        String userEmail = request.getEmail();
+
+        if(userRepository.findByEmail(userEmail).isPresent()) {
+            throw new RuntimeException("User already existing with this email");
+        };
 
         // Create user object
         UserEntity user = new UserEntity();
 
-        user.setName(request.getName());
-        user.setEmail(request.getEmail());
+        user.setName(userName);
+        user.setEmail(userEmail);
 
         // Encrypt password
         String encryptedPassword =
@@ -39,13 +48,21 @@ public class AuthService {
 
         user.setPassword(encryptedPassword);
 
-        // Assign USER role
-//        user.setRole(Role.USER);
-
         // Save into database
         userRepository.save(user);
+
+        RegistrationResDto registrationResDto = new RegistrationResDto(
+                "Registration Successfull",
+                HttpStatus.OK.value()
+        );
+
+        return new ResponseEntity<>(
+                registrationResDto,
+                HttpStatus.OK
+        );
+
     }
-    public AuthResponse login(LogInReqDTO request) {
+    public ResponseEntity<AuthResponseDto> login(LogInReqDto request) {
 
         // Find user
         UserEntity user = userRepository
@@ -68,10 +85,15 @@ public class AuthService {
         String token =
                 jwtService.generateToken(user.getEmail());
 
-        // Return token + role
-        return new AuthResponse(
+        AuthResponseDto authResponseDto = new AuthResponseDto(
                 token,
                 user.getName()
+        );
+
+        // Return token + role
+        return new ResponseEntity<>(
+                authResponseDto,
+                HttpStatus.OK
         );
     }
 

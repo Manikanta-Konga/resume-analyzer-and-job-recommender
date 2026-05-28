@@ -46,7 +46,7 @@ public class ParsingService {
 
         if (!(type.equals("application/pdf") || type.equals("application/msword"))) {
             throw new InvalidFileException("Content in the file is not supported. " +
-                    "Only pdf or doc type files are allowed");
+                    "Only pdf, docx or doc type files are allowed");
         }
 
         try {
@@ -58,7 +58,6 @@ public class ParsingService {
             throw new ResumeProcessingException("Failed to parse the resume file, tika exception occured",
                     obj2);
         }
-
 
         //Returning the formatted file as String without extra spaces, lines.
         // Converts entire String into lowercase

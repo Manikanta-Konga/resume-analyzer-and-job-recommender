@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.Set;
 
 @Component
-public class ResponseDTO {
+public class JobResponseDto {
 
     private String jobTitle;
     private String companyName;
@@ -14,12 +14,12 @@ public class ResponseDTO {
     private Set<String> missingSkills;
     private float matchPercentage;
 
-    public ResponseDTO() {
+    public JobResponseDto() {
 
     }
 
-    public ResponseDTO(String jobTitle, String companyName, Set<String> matchedSkills,
-                       Set<String> missingSkills, float matchPercentage) {
+    public JobResponseDto(String jobTitle, String companyName, Set<String> matchedSkills,
+                          Set<String> missingSkills, float matchPercentage) {
         this.jobTitle = jobTitle;
         this.companyName = companyName;
         this.matchedSkills = matchedSkills;
