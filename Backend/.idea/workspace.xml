@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dabea021-78cc-4986-bd54-7d11fdb190da" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../Frontend/src/pages/Login.js" beforeDir="false" afterPath="$PROJECT_DIR$/../Frontend/src/pages/Login.js" afterDir="false" />
-    </list>
+    <list default="true" id="dabea021-78cc-4986-bd54-7d11fdb190da" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
