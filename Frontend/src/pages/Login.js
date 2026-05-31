@@ -27,7 +27,7 @@ export default function Login() {
 
             console.log(response);
 
-            if (response.token) {
+            if (response.data.token) {
 
                 localStorage.setItem(
                     "token",
@@ -45,12 +45,12 @@ export default function Login() {
             } else if(response.data.message){
                 alert(response.data.message);
             } else {
-                alert("Enter correct credentials. If not logged in user, try to register first.")
+                alert("Enter correct credentials")
             }
         } catch (error) {
 
             console.error(error);
-            alert("Login failed, enter correct credentials");
+            alert("Something went wrong try again!");
 
         } finally {
             setLoading(false);
