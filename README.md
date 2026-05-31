@@ -177,19 +177,19 @@ Handled cases:
 ## Screenshots
 
 ### Register Page
-![Login Page](screenshots/register.png)
+![Login Page](Screenshots/register.png)
 
 ### Login Page
-![Login Page](screenshots/login.png)
+![Login Page](Screenshots/login.png)
 
 ### Resume Upload
-![Upload Page](screenshots/Dashboard.png)
+![Upload Page](Screenshots/resumeUpload.png)
 
 ### Job Recummendation Details
-![Upload Page](screenshots/jobRecommendataions.png)
+![Upload Page](Screenshots/jobRecommendation.png)
 
 ### Ats Details
-![Upload Page](screenshots/atsDetails.png)
+![Upload Page](Screenshots/atsDetails.png)
 
 ---
 
