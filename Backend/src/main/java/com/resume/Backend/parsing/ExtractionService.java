@@ -42,23 +42,39 @@ public class ExtractionService {
 
     public Set<String> extractSkills(String text) {
 
-        List<String> singleSkillSet = Arrays.asList( "java", "python", "c", "cpp", "javascript", "typescript",
-                "html", "css", "react", "angular", "vue", "node", "spring", "django", "flask", "mysql", "postgresql",
-                "mongodb", "oracle", "firebase", "redis", "git", "github", "docker", "kubernetes", "jenkins",
-                "linux", "aws", "azure", "gcp", "dsa", "sql", "pandas", "numpy", "tableau", "excel", "tensorflow",
-                "pytorch","security", "cryptography","flutter", "android", "ios","oop", "dbms", "os", "networks"
+        List<String> singleSkillSet = Arrays.asList(
+                "java", "python", "javascript", "typescript", "html", "css", "react", "redux", "axios",
+                "bootstrap", "mongodb", "mysql", "postgresql", "sql", "hibernate", "jpa", "jdbc",
+                "maven", "jwt", "git", "github", "docker", "kubernetes", "node", "express",
+                "mongoose", "django", "flask", "fastapi", "sqlalchemy", "pytest", "kotlin",
+                "android", "firebase", "retrofit", "flutter", "dart", "provider", "bloc",
+                "sqlite", "selenium", "testng", "junit", "postman", "jira", "excel",
+                "pandas", "numpy", "tableau", "tensorflow", "pytorch", "linux", "aws",
+                "azure", "gcp", "jenkins", "terraform", "ansible", "nginx", "wireshark",
+                "nmap", "owasp", "siem", "firewalls", "agile", "communication",
+                "networking", "statistics", "security", "monitoring", "microservices",
+                "responsive", "algorithms", "oops", "dbms"
         );
 
         List<String> multiSkillSet = Arrays.asList(
-                "core java", "advanced java", "spring boot", "machine learning", "deep learning","data science",
-                "object oriented programming", "computer networks","operating systems", "database management system",
-                "natural language processing", "computer vision","web development", "frontend development",
-                "backend development", "full stack development", "mobile app development", "rest api",
-                "restful services", "microservices architecture","version control", "agile methodology",
-                "software engineering","cloud computing", "continuous integration", "continuous deployment",
-                "test driven development", "unit testing", "integration testing","performance testing", "functional testing",
-                "responsive design", "state management","authentication authorization", "role based access control",
-                "exception handling", "dependency injection","design patterns", "system design", "data analysis", "data structures"
+                "spring boot", "spring mvc", "spring security", "react js", "tailwind css",
+                "responsive design", "rest api", "rest api integration", "context api",
+                "node js", "express js", "manual testing", "automation testing",
+                "api testing", "rest assured", "test cases", "bug tracking",
+                "machine learning", "deep learning", "data visualization",
+                "feature engineering", "model deployment", "data cleaning",
+                "data analysis", "cloud security", "shell scripting",
+                "github actions", "ethical hacking", "penetration testing",
+                "network security", "incident response", "business analysis",
+                "requirement gathering", "stakeholder management", "problem solving",
+                "computer networks", "operating systems", "state management",
+                "responsive ui", "android studio", "jetpack compose",
+                "version control", "object oriented programming",
+                "database management system", "continuous integration",
+                "continuous deployment", "software engineering",
+                "cloud computing", "mobile app development",
+                "frontend development", "backend development",
+                "full stack development", "unit testing", "system design"
         );
 
         Set<String> wordSet = new HashSet<>();

@@ -41,7 +41,7 @@ public class FileStoringService {
 
         // Checks whether the entered resume is supported format or not
         if(!(extension.equals(".pdf") || extension.equals(".doc") || extension.equals(".docx"))) {
-            throw new InvalidFileException("Format not supporting, upload pdf, doc or docx file");
+            throw new InvalidFileException("Invalid file format. Only PDF, DOC, and DOCX files are supported.");
         }
 
         newFileName = name + "_" + timeStamp + "_" + uuId + extension;

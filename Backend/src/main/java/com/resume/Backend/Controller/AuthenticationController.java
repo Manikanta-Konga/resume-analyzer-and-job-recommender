@@ -1,11 +1,12 @@
 package com.resume.Backend.controller;
 
 
-import com.resume.Backend.dto.AuthResponseDto;
-import com.resume.Backend.dto.LogInReqDto;
-import com.resume.Backend.dto.RegisterReqDto;
-import com.resume.Backend.dto.RegistrationResDto;
+import com.resume.Backend.dto.responseDto.AuthResponseDto;
+import com.resume.Backend.dto.requestDto.LogInReqDto;
+import com.resume.Backend.dto.requestDto.RegisterReqDto;
+import com.resume.Backend.dto.responseDto.RegistrationResDto;
 import com.resume.Backend.service.authenticationservice.AuthService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,13 +26,13 @@ public class AuthenticationController {
 
     @PostMapping("/register")
     public ResponseEntity<RegistrationResDto> register(
-            @RequestBody RegisterReqDto request) {
+            @Valid @RequestBody RegisterReqDto request) {
         return authService.register(request);
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDto> login(
-            @RequestBody LogInReqDto request) {
+            @Valid @RequestBody LogInReqDto request) {
 
         return authService.login(request);
     }

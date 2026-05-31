@@ -1,6 +1,8 @@
-package com.resume.Backend.dto;
+package com.resume.Backend.dto.responseDto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.resume.Backend.dto.CompanyDto;
+import com.resume.Backend.dto.LocationDto;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AdzunaJobDto {

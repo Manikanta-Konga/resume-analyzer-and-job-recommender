@@ -1,9 +1,9 @@
 package com.resume.Backend.service.authenticationservice;
 
-import com.resume.Backend.dto.AuthResponseDto;
-import com.resume.Backend.dto.LogInReqDto;
-import com.resume.Backend.dto.RegisterReqDto;
-import com.resume.Backend.dto.RegistrationResDto;
+import com.resume.Backend.dto.responseDto.AuthResponseDto;
+import com.resume.Backend.dto.requestDto.LogInReqDto;
+import com.resume.Backend.dto.requestDto.RegisterReqDto;
+import com.resume.Backend.dto.responseDto.RegistrationResDto;
 import com.resume.Backend.entity.UserEntity;
 import com.resume.Backend.repository.UserRepo;
 import org.springframework.http.HttpStatus;
@@ -31,6 +31,10 @@ public class AuthService {
 
         String userName = request.getName();
         String userEmail = request.getEmail();
+
+        if(!userEmail.endsWith(".com")) {
+            throw new RuntimeException("Enter Valid Email");
+        }
 
         if(userRepository.findByEmail(userEmail).isPresent()) {
             throw new RuntimeException("User already existing with this email");

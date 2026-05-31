@@ -1,4 +1,4 @@
-package com.resume.Backend.dto;
+package com.resume.Backend.dto.responseDto;
 
 
 import org.springframework.stereotype.Component;

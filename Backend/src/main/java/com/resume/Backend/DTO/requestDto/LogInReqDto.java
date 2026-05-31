@@ -1,5 +1,6 @@
-package com.resume.Backend.dto;
+package com.resume.Backend.dto.requestDto;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 @Data
@@ -8,7 +9,11 @@ import lombok.*;
 @Getter
 @Setter
 public class LogInReqDto {
+
+    @NotBlank(message = "Email is required")
     private String email;
+
+    @NotBlank(message = "Password is required")
     private String password;
 
     public String getEmail() {
