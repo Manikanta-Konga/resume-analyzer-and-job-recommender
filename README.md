@@ -174,6 +174,24 @@ Handled cases:
 - Duplicate skills
 
 ---
+## Screenshots
+
+### Register Page
+![Login Page](screenshots/register.png)
+
+### Login Page
+![Login Page](screenshots/login.png)
+
+### Resume Upload
+![Upload Page](screenshots/Dashboard.png)
+
+### Job Recummendation Details
+![Upload Page](screenshots/jobRecommendataions.png)
+
+### Ats Details
+![Upload Page](screenshots/atsDetails.png)
+
+---
 
 ## Advantages
 
