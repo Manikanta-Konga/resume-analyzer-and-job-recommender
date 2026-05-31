@@ -295,7 +295,7 @@ Through this project, I learned:
 
 ## Author
 
-Manikanta  
+Manikanta  | Shravani | Akhila
 MCA Final-Year Student  
 Java Full Stack Developer
 
