@@ -1,6 +1,6 @@
 package com.resume.Backend.parsing;
 
-import com.resume.Backend.dto.ResumeDataDto;
+import com.resume.Backend.dto.responseDto.ResumeDataDto;
 import org.springframework.stereotype.Component;
 
 import java.util.*;

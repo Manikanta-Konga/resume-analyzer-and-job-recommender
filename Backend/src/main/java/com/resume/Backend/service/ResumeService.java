@@ -1,7 +1,7 @@
 package com.resume.Backend.service;
 
 import com.resume.Backend.dto.responseDto.ResumeAnalysisDto;
-import com.resume.Backend.dto.ResumeDataDto;
+import com.resume.Backend.dto.responseDto.ResumeDataDto;
 import com.resume.Backend.exceptionhandling.customexception.InvalidFileException;
 import com.resume.Backend.entity.ResumeEntity;
 //import com.resume.Backend.parsing.JobMatchingService;
